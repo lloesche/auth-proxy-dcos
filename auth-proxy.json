@@ -1,0 +1,42 @@
+{
+  "id": "/prometheus/auth-proxy",
+  "cpus": 0.01,
+  "mem": 256,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "lloesche/auth-proxy-dcos",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 0,
+          "protocol": "tcp",
+        }
+      ],
+      "privileged": false,
+      "forcePullImage": true
+    }
+  },
+  "healthChecks": [
+    {
+      "path": "/auth-proxy-healthcheck",
+      "protocol": "HTTP",
+      "portIndex": 0
+    }
+  ],
+  "labels": {
+    "HAPROXY_0_VHOST": "monitoring.example.com"
+  },
+  "env": {
+    "USER":     "monitoring",
+    "PASSWORD": "{PLAIN}changeme",
+    "SERVER_NAME": "_",
+    "LOCATION": "/",
+    "PROXY_PASS": "http://10.177.90.1:9090/"
+  }
+}
+
