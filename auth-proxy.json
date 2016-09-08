@@ -29,7 +29,8 @@
     }
   ],
   "labels": {
-    "HAPROXY_0_VHOST": "monitoring.example.com"
+    "HAPROXY_0_VHOST": "monitoring.example.com",
+    "HAPROXY_GROUP": "external"
   },
   "env": {
     "USER":     "monitoring",
