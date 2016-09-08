@@ -1,0 +1,4 @@
+#!/bin/bash
+envsubst < /etc/nginx/conf.d/auth-proxy.template > /etc/nginx/conf.d/auth-proxy.conf
+envsubst < /etc/nginx/auth/htpasswd.template > /etc/nginx/auth/htpasswd
+exec /usr/sbin/nginx -g 'daemon off;'

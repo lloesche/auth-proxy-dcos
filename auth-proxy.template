@@ -1,0 +1,13 @@
+server {
+  listen 80;
+  server_name $SERVER_NAME;
+  access_log /dev/stdout;
+  error_log /dev/stdout debug;
+  rewrite_log on;
+
+  location $LOCATION {
+    auth_basic           "$SERVER_NAME";
+    auth_basic_user_file /etc/nginx/auth/htpasswd;
+    proxy_pass $PROXY_PASS;
+  }
+}
