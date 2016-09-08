@@ -23,7 +23,7 @@
   },
   "healthChecks": [
     {
-      "path": "/auth-proxy-healthcheck",
+      "path": "/auth-proxy-health-check",
       "protocol": "HTTP",
       "portIndex": 0
     }
