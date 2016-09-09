@@ -17,8 +17,8 @@ $ dcos marathon app add auth-proxy.json
 ## Environment Variables
 | Variable | Function | Example |
 |----------|----------|-------|
-|`USER` | Basic auth login user | `USER=lukas`|
-|`PASSWORD` | Basic auth login password | `PASSWORD={PLAIN}letmein`|
+|`USER` | Login username | `USER=lukas`|
+|`PASSWORD` | Login password ([following this scheme](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file)) | `PASSWORD={PLAIN}letmein`|
 |`SERVER_NAME` | Vhost to react on | `SERVER_NAME=_`|
 |`LOCATION` | Path to react on | `LOCATION=/` |
 |`PROXY_PASS` | Hostname or IP (plus optionally port) to proxy to | `PROXY_PASS=http://10.177.90:9090`|
