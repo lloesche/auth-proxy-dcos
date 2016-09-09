@@ -22,4 +22,4 @@ $ dcos marathon app add auth-proxy.json
 |`LOCATION` | Path to react on | `LOCATION=/` |
 |`PROXY_PASS` | URI to proxy to | `PROXY_PASS=http://10.177.90:9090`|
 
-Additional users can be defined via LOGIN0..100 and PASSWORD0..100.
+Additional users can be defined via `LOGIN0..100` and `PASSWORD0..100`.
