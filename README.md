@@ -6,7 +6,7 @@ This adds basic auth in front of any http(s) service running inside DC/OS. Requi
 Works best in combination with [marathon-lb](https://github.com/mesosphere/marathon-lb). The example auth-proxy.json app definition contains marathon-lb labels.
 
 ## Usage
-Adjust the HAPROXY_VHOST value in auth-proxy.json.
+Adjust the HAPROXY_0_VHOST and HAPROXY_GROUP labels in auth-proxy.json.
 
 Install using
 ```
