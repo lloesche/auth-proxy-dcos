@@ -1,5 +1,5 @@
 # DC/OS Auth Proxy
-A authentication proxy for services running on [Mesosphere DC/OS](https://dcos.io/)
+An authentication proxy for services running on [Mesosphere DC/OS](https://dcos.io/)
 
 ## Intro
 This adds basic auth in front of any http(s) service running inside DC/OS. Requires DC/OS 1.7+
