@@ -6,8 +6,6 @@ ec=0
 [ -z "${PROXY_PASS-}" ] && echo "Please provide the PROXY_PASS environment variable" && ec=1
 [ $ec -ne 0 ] && exit 1
 
-[ "${PASSWORD:0:1}" != "{" ] && echo "PASSWORD must contain the scheme" && exit 1
-
 export SERVER_NAME="${SERVER_NAME:-_}"
 export LOCATION="${LOCATION:-/}"
 echo "Writing config"
@@ -15,14 +13,12 @@ envsubst < /etc/nginx/conf.d/auth-proxy.template > /etc/nginx/conf.d/auth-proxy.
 echo -e "Writing user file:\n\t- $LOGIN"
 echo "$LOGIN:$PASSWORD" > /etc/nginx/auth/htpasswd
 for i in {0..100}; do
-    userenv="LOGIN$i"
-    passwdenv="PASSWORD$i"
-    if [ -n "${!userenv-}" -a -n "${!passwdenv-}" ]; then
-      if [ "${!passwdenv:0:1}" = "{" ]; then
-      	echo -e "\t- ${!userenv}"
-      	echo "${!userenv}:${!passwdenv}" >> /etc/nginx/auth/htpasswd
-      fi
-    fi
+  userenv="LOGIN$i"
+  passwdenv="PASSWORD$i"
+  if [ -n "${!userenv-}" -a -n "${!passwdenv-}" ]; then
+    echo -e "\t- ${!userenv}"
+    echo "${!userenv}:${!passwdenv}" >> /etc/nginx/auth/htpasswd
+  fi
 done
 echo "Starting DC/OS auth proxy"
 exec /usr/sbin/nginx -g 'daemon off;'
