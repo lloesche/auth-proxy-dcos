@@ -6,8 +6,8 @@ ec=0
 [ -z "${PROXY_PASS-}" ] && echo "Please provide the PROXY_PASS environment variable" && ec=1
 [ $ec -ne 0 ] && exit 1
 
-export SERVER_NAME="${SERVER_NAME:-_}"
-export LOCATION="${LOCATION:-/}"
+: "${SERVER_NAME:=_}" "${LOCATION:=/}"
+export SERVER_NAME LOCATION
 echo "Writing config"
 envsubst < /etc/nginx/conf.d/auth-proxy.template > /etc/nginx/conf.d/auth-proxy.conf
 echo -e "Writing user file:\n\t- $LOGIN"
