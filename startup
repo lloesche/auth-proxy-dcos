@@ -27,6 +27,8 @@ for i in {0..100}; do
     auth_basic           "$SERVER_NAME";
     auth_basic_user_file /etc/nginx/auth/htpasswd;
     proxy_pass ${!proxy_pass};
+    rewrite ^${!location}(/.*)\$ \$1 break;
+    proxy_redirect off;
   }" >> /etc/nginx/conf.d/auth-proxy.conf
   fi
 done
