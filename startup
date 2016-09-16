@@ -10,6 +10,17 @@ ec=0
 export SERVER_NAME LOCATION
 echo "Writing config"
 envsubst < /etc/nginx/conf.d/auth-proxy.template > /etc/nginx/conf.d/auth-proxy.conf
+echo "  location $LOCATION {
+    auth_basic \"$SERVER_NAME\";
+    auth_basic_user_file /etc/nginx/auth/htpasswd;
+    rewrite ^${LOCATION%/}/(.*) /\$1 break;
+    proxy_redirect off;
+    proxy_set_header Host \$host;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_pass $PROXY_PASS;
+  }" >> /etc/nginx/conf.d/auth-proxy.conf
 echo -e "Writing user file:\n\t- $LOGIN"
 echo "$LOGIN:$PASSWORD" > /etc/nginx/auth/htpasswd
 for i in {0..100}; do
@@ -24,15 +35,15 @@ for i in {0..100}; do
   proxy_pass="PROXY_PASS$i"
   if [ -n "${!location-}" -a -n "${!proxy_pass-}" ]; then
     echo "  location ${!location} {
-    auth_basic           "$SERVER_NAME";
+    auth_basic \"$SERVER_NAME\";
     auth_basic_user_file /etc/nginx/auth/htpasswd;
-    proxy_pass ${!proxy_pass};
-    rewrite ^${!location}(/.*)\$ \$1 break;
+    rewrite ^${!location%/}/(.*) /\$1 break;
     proxy_redirect off;
     proxy_set_header Host \$host;
     proxy_set_header X-Real-IP \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_pass ${!proxy_pass};
   }" >> /etc/nginx/conf.d/auth-proxy.conf
   fi
 done
