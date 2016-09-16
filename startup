@@ -19,6 +19,17 @@ for i in {0..100}; do
     echo -e "\t- ${!userenv}"
     echo "${!userenv}:${!passwdenv}" >> /etc/nginx/auth/htpasswd
   fi
+
+  location="LOCATION$i"
+  proxy_pass="PROXY_PASS$i"
+  if [ -n "${!location-}" -a -n "${!proxy_pass-}" ]; then
+    echo "  location ${!location} {
+    auth_basic           "$SERVER_NAME";
+    auth_basic_user_file /etc/nginx/auth/htpasswd;
+    proxy_pass ${!proxy_pass};
+  }" >> /etc/nginx/conf.d/auth-proxy.conf
+  fi
 done
+echo "}" >> /etc/nginx/conf.d/auth-proxy.conf
 echo "Starting DC/OS auth proxy"
 exec /usr/sbin/nginx -g 'daemon off;'

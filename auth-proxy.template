@@ -15,4 +15,3 @@ server {
     auth_basic_user_file /etc/nginx/auth/htpasswd;
     proxy_pass $PROXY_PASS;
   }
-}
