@@ -33,7 +33,7 @@
     "HAPROXY_GROUP": "external"
   },
   "env": {
-    "USER":     "monitoring",
+    "LOGIN":     "monitoring",
     "PASSWORD": "{PLAIN}changeme",
     "SERVER_NAME": "_",
     "LOCATION": "/",
